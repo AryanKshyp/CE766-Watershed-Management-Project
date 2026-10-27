@@ -1,0 +1,5 @@
+gauge,series,mean_yield_mcm,dependable_75_mcm,deficient_yield_mcm,normal_yield_mcm,wet_yield_mcm,q95_m3s,q50_m3s,mean_annual_peak_m3s,n_years
+06008,observed,6609.6,4571.7,3814.3,6780.5,10059.8,2.9,29.6,3040.0,36
+06008,GR4J,6849.0,5488.4,4659.9,6922.3,9669.0,5.3,24.5,2875.3,36
+06001,observed,2752.9,1739.5,1626.5,2685.2,4267.2,1.1,8.3,2296.8,38
+06001,GR4J,2945.1,2042.2,1765.8,2899.3,4501.4,0.4,4.0,2228.6,38

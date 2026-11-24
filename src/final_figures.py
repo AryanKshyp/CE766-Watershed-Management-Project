@@ -4,7 +4,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
-from src.load import ROOT
+from src import ROOT
 
 OUT = ROOT / 'outputs' / 'final'
 TEAL, BLUE, INK, GREY = '#087969', '#27528b', '#183039', '#526773'

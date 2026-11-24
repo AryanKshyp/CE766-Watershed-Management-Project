@@ -4,10 +4,9 @@ from itertools import product
 import numpy as np
 import pandas as pd
 
-from src import gr4j, planning
+from src import PROCESSED, ROOT, gr4j, planning
 from src.interventions import (CHANDIL_AREA, DEMAND_MCM_DAY, FOREST_HA, LIVE_MCM,
                                Portfolio, Works, reservoir, zhang_et)
-from src.load import PROCESSED, ROOT
 
 TABLE = ROOT / 'outputs' / 'tables'
 AREA, KHARKAI = 12785., 6350.2
@@ -38,7 +37,7 @@ def main():
     d = sim[sim.gauge_id == '06008'].set_index('date').sort_index()
     kh = sim[sim.gauge_id == '06001'].set_index('date').loc[d.index]
     params = pd.read_csv(TABLE / 'gr4j_params.csv', dtype={'gauge_id': str}).set_index('gauge_id')
-    attrs = pd.read_parquet(PROCESSED / 'attributes.parquet').set_index('gauge_id')
+    attrs = pd.read_parquet(PROCESSED / 'study_attributes.parquet').set_index('gauge_id')
     forest = attrs.loc['06008', 'trees_frac']
     x = params.loc['06008', ['x1', 'x2', 'x3', 'x4']].to_numpy(float)
     kept, rain, dry = study_years(d)
@@ -52,7 +51,7 @@ def main():
     yields['rain_mm'] = rain
     yields['deficient'] = yields.index.isin(dry)
     yields.to_csv(TABLE / 'final_water_years.csv', index_label='june_year')
-    forcing = pd.read_parquet(PROCESSED / 'timeseries.parquet', columns=['gauge_id','date','aet_gleam'])
+    forcing = pd.read_parquet(PROCESSED / 'study_daily.parquet', columns=['gauge_id','date','aet_gleam'])
     gleam = forcing[forcing.gauge_id == '06008'].set_index('date').loc[d.index, 'aet_gleam']
     matched = keep & obs
     p, e = d.prcp[matched].mean() * 365, d.pet[matched].mean() * 365

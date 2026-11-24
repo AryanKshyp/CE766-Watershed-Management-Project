@@ -12,8 +12,7 @@ import numpy as np
 import pandas as pd
 from scipy.optimize import differential_evolution
 
-from src import gr4j
-from src.load import PROCESSED, ROOT
+from src import PROCESSED, ROOT, gr4j
 from src.metrics import all_metrics
 
 TABLES = ROOT / "outputs" / "tables"
@@ -24,7 +23,7 @@ BOUNDS = [(10, 2500), (-10, 6), (10, 800), (0.5, 8)]
 
 
 def load_gauge(g):
-    ts = pd.read_parquet(PROCESSED / "timeseries.parquet", columns=["gauge_id", "date", "prcp", "pet_gleam", "q_obs_mm"])
+    ts = pd.read_parquet(PROCESSED / "study_daily.parquet", columns=["gauge_id", "date", "prcp", "pet_gleam", "q_obs_mm"])
     d = ts[ts.gauge_id == g].set_index("date").sort_index()
     return d[d.index <= VAL_END]
 

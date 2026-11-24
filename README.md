@@ -1,10 +1,10 @@
-Data: CAMELS-IND v2.2 (Mangukiya et al., 2025, Earth System Science Data 17, 461–491), Zenodo: https://zenodo.org/records/14999580.
+# Subarnarekha watershed management
 
-## CE 766 final project
+This CE 766 project compares farm ponds, trench-cum-bunds, check dams and afforestation upstream of Chandil. It evaluates rabi irrigation, Jamshedpur supply, dry-season river flow and capital cost for [16 portfolios](outputs/tables/final_portfolios.csv). See the [two figures](outputs/final/) and [model assumptions and sources](docs/assumptions.md).
 
-The [final answers](docs/final_submission.md) compare farm ponds, trench-cum-bunds, check dams and afforestation upstream of Chandil. The [Word document and two numbered upload figures](outputs/final/) accompany the answers. All 16 portfolios and both sets of assumptions appear in the [results table](outputs/tables/final_portfolios.csv). The [assumptions and sources](docs/assumptions.md) explain the operating rule and the limits of the downstream comparison.
+The daily inputs cover the Jamshedpur and Adityapur catchments from 1980 to 2018. Missing discharge stays missing. The processed inputs are drawn from [CAMELS-IND v2.2, Mangukiya et al.](https://zenodo.org/records/14999580).
 
-From the repository root, with Python, NumPy, pandas, SciPy, PyArrow and Matplotlib installed, run:
+To reproduce the figures and tables from the repository root:
 
 ```sh
 python -m src.final_analysis

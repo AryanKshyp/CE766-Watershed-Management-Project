@@ -37,9 +37,10 @@ def unit_hydrographs(x4):
     return uh1, uh2
 
 
-def run(params, prcp, pet, s0=0.5, r0=0.5, full=False):
+def run(params, prcp, pet, s0=0.5, r0=0.5, full=False, works=None):
     """Run GR4J. prcp, pet: daily arrays in mm/day. s0, r0: initial stores as fractions of x1, x3.
 
+    An optional works object diverts effective rainfall and streamflow and records its own stores.
     Returns simulated flow Q (mm/day). With full=True returns a dict with every store and flux
     (needed by the intervention modules and by the water-balance test):
         q, aet, exchange (actual water gained (+) or lost (-) through x2), s (production store, end of day),
@@ -76,6 +77,9 @@ def run(params, prcp, pet, s0=0.5, r0=0.5, full=False):
         perc = S * (1 - (1 + (4.0 / 9.0 * S / x1) ** 4) ** -0.25)
         S -= perc
         pr = perc + (pn - ps)
+        if works is not None:
+            pr, recharge = works.upland(t, pr)
+            R += recharge
 
         # split 90/10 between the two unit hydrographs, then shift the buffers by one day
         for k in range(n1):
@@ -96,6 +100,8 @@ def run(params, prcp, pet, s0=0.5, r0=0.5, full=False):
         f_d = f if qd_raw >= 0 else -q1        # actual exchange on the direct branch
         qd = max(0.0, qd_raw)
         Q[t] = qr + qd
+        if works is not None:
+            Q[t] = works.stream(t, Q[t])
 
         if full:
             out["aet"][t] = es + min(p, e)
